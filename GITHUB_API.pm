@@ -1,13 +1,17 @@
-package OKTA_API;
+package GITHUB_API;
 
 use base qw(Exporter);
 our @EXPORT = qw(api_call);
 
 # URL
-my $url = "https://ansarada.okta.com/api/v1";
+my $url = "https://github.com/MY/API/STUFF"
 
-my $token_loc = "../tokens/okta_token.txt";
-die "ERROR: Okta token not found at okta_token.txt\n" if not -f $token_loc;
+# TOKEN
+my $token_name = "github_token.txt"
+my $token_dir = ""                  # relative dir change if token not in current dir
+
+my $token_loc = $token_dir . $token_name;
+die "ERROR: Token not found at $token_loc\n" if not -f $token_loc;
 open F, "<", $token_loc;
 $token=<F>;
 chomp $token;
@@ -19,9 +23,10 @@ sub check_api_error { my ( $res ) = @_;
     if ($res =~ /errorCode":/) {
         my $error_code = $res;
         my $error_summary = $res;
-        $error_code =~ s/^.*"errorCode":"(E[0-9]+)".*$/$1/;
-        $error_summary =~ s/^.*"errorSummary":"([^"]+)".*$/$1/;
-        die "Error [$error_code]: $error_summary\n";
+        # TODO: Change to make work with Github
+        #$error_code =~ s/^.*"errorCode":"(E[0-9]+)".*$/$1/;
+        #$error_summary =~ s/^.*"errorSummary":"([^"]+)".*$/$1/;
+        #die "Error [$error_code]: $error_summary\n";
     }
 
     return $res;
